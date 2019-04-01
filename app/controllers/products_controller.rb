@@ -26,9 +26,9 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
+    @product.user = current_user
     authorize! :create, @product
     if @product.save
-      login(@user)
       redirect_to @product, notice: 'Product was successfully created.'
     else
       render :new
